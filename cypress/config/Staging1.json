@@ -1,0 +1,14 @@
+{
+  "baseUrl": "https://hr-staging.devsinc.com/login",
+  "env": {
+    "Login": "https://hr-staging.devsinc.com/login",
+    "Dashboard":"https://hr-staging.devsinc.com/dashboard",
+    "People":"https://hr-staging.devsinc.com/people",
+    "Ticket":"https://hr-staging.devsinc.com/tickets",
+    "Leave":"https://hr-staging.devsinc.com/Leave",
+    "Claim":"https://hr-staging.devsinc.com/Claim",
+    "ForgotPassword":"https://hr-staging.devsinc.com/forgot_password",
+    "Mailer":"https://api-staging.devsinc.com/letter_opener/",
+    "Admin Panel": "https://hr-staging.devsinc.com/admin/admin_panel"
+  }
+}

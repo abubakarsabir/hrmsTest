@@ -1,0 +1,14 @@
+{
+  "SuperUser": {
+    "email": "admin@devsinc.com",
+    "password": " C0mplexpass"
+  },
+  "NormalUser": {
+    "email": "anas.shahid@devsinc.com",
+    "password": "C0mplexpass"
+  },
+  "Pm": {
+    "email": "faisal.waleed@devsinc.com",
+    "password": "C0mplexpass"
+  }
+}

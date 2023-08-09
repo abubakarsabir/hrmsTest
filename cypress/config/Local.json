@@ -1,0 +1,24 @@
+{
+  "baseUrl": "http://localhost:3001/login",
+  "env": {
+      "ForgotPassword": "http://localhost:3001/forgot_password",
+      "Login": "http://localhost:3001/login",
+      "Dashboard": "http://localhost:3001/dashboard",
+      "Department": "http://localhot:3001/departments",
+      "People": "http://localhost:3001/people",
+      "Roles" : "http://localhost:3001/roles",
+      "Ticket": "http://localhost:3001/tickets",
+      "Leaves": "http://localhost:3001/leaves",
+      "Claim": "http://localhost:3001/claims",
+      "Inventory": "http://localhost:3001/item",
+      "D-NAR": "http://localhost:3001/dnar",
+      "Admin Panel": "http://localhost:3001/admin/admin_panel",
+      "Project": "http://locahost:3001/projects",
+      "Report": "http://loclhost:3001/reports",
+      "Feedback": "http://loalhost:3001/feedbacks",
+      "Calendar": "http://localhost:3001/calendar",
+      "Admin Setting": "http://localhost:3001/application_settings",
+      "Setting": "http://lcalhost:3001/settings",
+      "Mailer":"http://localhost:3000/letter_opener"
+  }
+}

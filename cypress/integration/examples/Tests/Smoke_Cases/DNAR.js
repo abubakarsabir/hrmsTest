@@ -1,0 +1,108 @@
+import DnarAdminPanel from '../../Pages/DnarAdminPanel'
+import DNARS from '../../Pages/DNARS'
+import NavBar from '../../Pages/NavBar'
+
+beforeEach(() => {
+  cy.Login()
+})
+
+describe('Smoke:DNAR Test', () => {
+  const navbar = new NavBar()
+  const dnars = new DNARS()
+  const adminpage = new DnarAdminPanel()
+
+  let verificationCode, vc
+  it('C59: User can generate D-NAR.', () => {
+    navbar.sideNavAdminPanel().should('be.visible').click()
+    cy.url().should('include', 'admin_panel')
+    adminpage.dnarsMinting().should('be.visible').click()
+    adminpage.generateDnars().should('be.visible').click()
+    adminpage.generateDnarsHeading().should('be.visible')
+    adminpage.dnarInput().should('be.visible').type('100')
+    adminpage.nextBtn().should('be.visible').click()
+    cy.forceVisit(Cypress.env('Mailer'))
+    cy.wait(5000)
+    cy.get('.refresh').click()
+    cy.get('.active > :nth-child(1) > a').then(($Content) => {
+      cy.forceVisit(Cypress.env('Mailer') + '/' + $Content.get(0).innerText + '/rich')
+    })
+    cy.get('iframe').then(function ($iframeContent) {
+      verificationCode = $iframeContent.contents().find('tbody tr td.main-header div h3')
+      cy.wrap(verificationCode[1].innerText)
+      vc = verificationCode[1].innerText
+      cy.forceVisit(Cypress.env('Admin Panel'))
+      cy.url().should('include', 'admin_panel')
+      adminpage.dnarsMinting().should('be.visible').click()
+      adminpage.generateDnars().should('be.visible').click()
+      adminpage.generateDnarsHeading().should('be.visible')
+      adminpage.dnarInput().should('be.visible').type('100')
+      cy.wait(500)
+      adminpage.nextBtn().should('be.visible').click()
+      //cy.intercept('POST', 'dnar_transactions').as('posttrans')
+      adminpage.tokenInput().should('be.visible').type(vc)
+      adminpage.generateBtn().scrollIntoView().should('be.visible').click()
+      //cy.wait('@posttrans')
+      //cy.get('@posttrans').then((xhr) => {
+      //  expect(xhr.response.statusCode).to.equal(200)
+      //  expect(xhr.response.statusMessage).to.equal('OK')
+      //})
+    })
+  })
+
+  it('C61: Users can approve D-NAR transaction', () => {
+    navbar.sideNavAdminPanel().should('be.visible').click()
+    cy.url().should('include', 'admin_panel')
+    adminpage.DnarApprovals().should('be.visible')
+    adminpage.approveTransaction().should('be.visible').click()
+    adminpage.remarksTextarea().should('be.visible').type('This is approved for testing')
+    adminpage.submitRemarks().should('be.visible').click()
+  })
+
+  it('C60: User can allocate D-NAR.', () => {
+    navbar.sideNavAdminPanel().should('be.visible').click()
+    cy.url().should('include', 'admin_panel')
+    adminpage.dnarsMinting().should('be.visible').click()
+    adminpage.centralBank().should('be.visible')
+    adminpage.mintedTilltoday().should('be.visible')
+    adminpage.transferredTillTodday().should('be.visible')
+    adminpage.transferDNARS().should('be.visible').click()
+    adminpage.crossIcon().should('be.visible').click()
+    //cy.wait(1000)
+    adminpage.transferDNARS().should('be.visible').click()
+    adminpage.categoryTo().should('be.visible').click()
+    adminpage.selectCategory().should('be.visible').click()
+    adminpage.provideDNARS().should('be.visible').type(50)
+    adminpage.transcationNote().should('be.visible').type('This is for testing')
+    adminpage.awardDNARSTo().should('be.visible').click()
+    adminpage.selectUserToTransfer().scrollIntoView().should('be.visible').click()
+    adminpage.pmfund().should('be.visible').click({ force: true })
+    adminpage.transferBtn().should('be.visible').click()
+    adminpage.DnarApprovals().should('be.visible').click()
+    adminpage.approveTransaction().should('be.visible').click()
+    adminpage.remarksTextarea().should('be.visible').type('This is approved for testing')
+    adminpage.submitRemarks().should('be.visible').click()
+    navbar.sideNavDNARS().should('be.visible').click()
+    dnars.allocateDNARSTab().should('be.visible').click()
+    dnars.allocateDNARSBtn().should('be.visible').click()
+    dnars.crossIcon().should('be.visible').click()
+    //cy.wait(1000)
+    dnars.allocateDNARSBtn().should('be.visible').click()
+    dnars.allocateDNARSHeader().should('be.visible')
+    dnars.awardTo().should('be.visible').click()
+    dnars.selectAwardTo().should('be.visible').click()
+    dnars.category().should('be.visible').click()
+    dnars.selectCategory().should('be.visible').click()
+    dnars.inputDNARS().should('be.visible').type(25)
+    dnars.inputNotes().should('be.visible').type('For automated testing')
+    dnars.allocateDNARS().should('be.visible').click()
+  })
+
+  it('C62: User can reject D-NAR transaction.', () => {
+    navbar.sideNavAdminPanel().should('be.visible').click()
+    cy.url().should('include', 'admin_panel')
+    adminpage.DnarApprovals().should('be.visible')
+    adminpage.rejectTransaction().should('be.visible').click()
+    adminpage.remarksTextarea().should('be.visible').type('This is rejected for testing')
+    adminpage.submitRemarks().should('be.visible').click()
+  })
+})

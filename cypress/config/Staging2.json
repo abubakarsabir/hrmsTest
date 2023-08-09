@@ -1,0 +1,11 @@
+{
+  "baseUrl": "https://hr-staging2.devsinc.com/login",
+  "env": {
+    "Login": "https://hr-staging2.devsinc.com/login",
+    "Dashboard":"https://hr-staging2.devsinc.com/dashboard",
+    "People":"https://hr-staging2.devsinc.com/people",
+    "Ticket":"https://hr-staging2.devsinc.com/Ticket",
+    "Leave":"https://hr-staging2.devsinc.com/Leave",
+    "Claim":"https://hr-staging2.devsinc.com/Claim"
+  }
+}
